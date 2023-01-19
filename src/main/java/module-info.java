@@ -1,4 +1,4 @@
-module com.example.library {
+module codes.library {
     requires javafx.controls;
     requires javafx.fxml;
 
