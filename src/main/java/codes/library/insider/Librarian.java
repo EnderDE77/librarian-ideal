@@ -10,6 +10,11 @@ public class Librarian{
     private String email;
     private double salary;
     private AccessLevel accessLevel;
+    /*TODO: Give the people permissions to do smth or not
+    Perm1: selling
+    Perm2: entering product
+    Perm3: creating new book/category
+     */
     public Librarian(String pass,int ID,String name,Date bDay,String phoneNo,String email, double salary){
         setPass(pass);
         setName(name);

@@ -9,7 +9,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
-
+//TODO: add the amount of bills to WHE and use it as a STATIC value
 public abstract class Warehouse {
     private static ArrayList<Librarian> people;
     private static ArrayList<Book> books;
