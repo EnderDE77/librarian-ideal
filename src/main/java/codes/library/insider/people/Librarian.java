@@ -1,4 +1,4 @@
-package codes.library.insider;
+package codes.library.insider.people;
 
 import java.util.Date;
 public class Librarian{
@@ -9,20 +9,20 @@ public class Librarian{
     private String PhoneNo;
     private String email;
     private double salary;
-    private AccessLevel accessLevel;
+    private boolean canSell;
     /*TODO: Give the people permissions to do smth or not
     Perm1: selling
     Perm2: entering product
     Perm3: creating new book/category
      */
-    public Librarian(String pass,int ID,String name,Date bDay,String phoneNo,String email, double salary){
+    public Librarian(String pass, int ID, String name, Date bDay, String phoneNo, String email, double salary, boolean canSell){
         setPass(pass);
         setName(name);
         setbDay(bDay);
         setPhoneNo(phoneNo);
         setEmail(email);
         setSalary(salary);
-        setAccessLevel(accessLevel);
+        setCanSell(canSell);
     }
     public int getID(){
         return this.ID;
@@ -60,16 +60,18 @@ public class Librarian{
     public void setSalary(double salary) {
         this.salary = salary;
     }
-    public AccessLevel getAccessLevel() {
-        return accessLevel;
-    }
-    public void setAccessLevel(AccessLevel accessLevel) {
-        this.accessLevel = accessLevel;
-    }
     public String getPass(){
         return this.pass;
     }
     public void setPass(String pass){
         this.pass = pass;
+    }
+
+    public boolean isCanSell() {
+        return canSell;
+    }
+
+    public void setCanSell(boolean canSell) {
+        this.canSell = canSell;
     }
 }

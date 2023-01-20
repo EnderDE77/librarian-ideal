@@ -2,7 +2,7 @@ package codes.library.texts;
 
 import codes.library.insider.Book;
 import codes.library.insider.Bill;
-import codes.library.insider.Librarian;
+import codes.library.insider.people.Librarian;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,9 +24,6 @@ public abstract class Warehouse {
             Scanner input = new Scanner(libs);
             for (; input.hasNext(); ) {
                 String lib = input.nextLine();
-                try (Scanner in = new Scanner(lib)) {
-                    people.add(new Librarian(in.next(), in.nextInt(), in.next(), new Date(in.next()), in.next(), in.next(), in.nextDouble()));
-                }
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

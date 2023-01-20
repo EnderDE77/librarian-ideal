@@ -1,7 +1,13 @@
 package codes.library.visual;
 
+import codes.library.insider.people.Librarian;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+
 public abstract class Selling {
-    /*TODO: Install a window that manages to connect with WHE and Warehouse by removing or adding books, p sure Entering is similar
-    oh yea make this return a Stage that we can use in Main
-     */
+    public static Scene sellScene(Librarian lib){
+        Pane pane = new Pane();
+
+        return new Scene(pane,1000,1000);
+    }
 }
