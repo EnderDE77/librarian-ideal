@@ -3,6 +3,7 @@ package codes.library;
 import codes.library.visual.Starter;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import codes.library.texts.Warehouse;
 import javafx.scene.Scene;
 import javafx.scene.paint.*;
 import javafx.scene.control.*;
@@ -19,7 +20,7 @@ public class Main extends Application{
         stage.show();
     }
     public static void main(String[] args){
-       // Warehouse.ready();
-        Application.launch(args);
+       Warehouse.ready();
+       Application.launch(args);
     }
 }

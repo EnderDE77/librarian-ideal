@@ -74,4 +74,9 @@ public class Librarian{
     public void setCanSell(boolean canSell) {
         this.canSell = canSell;
     }
+
+    @Override
+    public String toString() {
+        return getName()+" "+getID()+" "+getPhoneNo()+" "+getPass();
+    }
 }
