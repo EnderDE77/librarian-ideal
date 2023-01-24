@@ -1,7 +1,10 @@
-package codes.library.insider.people;
+package codes.bookstore.insider.people;
 
+import java.io.Serializable;
 import java.util.Date;
-public class Librarian{
+
+public class User implements Serializable {
+    private String username;
     private String pass;
     private int ID;
     private String name;
@@ -9,20 +12,16 @@ public class Librarian{
     private String PhoneNo;
     private String email;
     private double salary;
-    private boolean canSell;
-    /*TODO: Give the people permissions to do smth or not
-    Perm1: selling
-    Perm2: entering product
-    Perm3: creating new book/category
-     */
-    public Librarian(String pass, int ID, String name, Date bDay, String phoneNo, String email, double salary, boolean canSell){
-        setPass(pass);
-        setName(name);
-        setbDay(bDay);
-        setPhoneNo(phoneNo);
-        setEmail(email);
-        setSalary(salary);
-        setCanSell(canSell);
+
+    public User(String username, String pass, int id, String name, Date bDay, String phoneNo, String email, double salary) {
+        this.username = username;
+        this.pass = pass;
+        this.ID = id;
+        this.name = name;
+        this.bDay = bDay;
+        this.PhoneNo = phoneNo;
+        this.email = email;
+        this.salary = salary;
     }
     public int getID(){
         return this.ID;
@@ -67,16 +66,16 @@ public class Librarian{
         this.pass = pass;
     }
 
-    public boolean isCanSell() {
-        return canSell;
-    }
-
-    public void setCanSell(boolean canSell) {
-        this.canSell = canSell;
-    }
-
     @Override
     public String toString() {
         return getName()+" "+getID()+" "+getPhoneNo()+" "+getPass();
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

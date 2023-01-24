@@ -1,4 +1,4 @@
-package codes.library.visual;
+package codes.bookstore.visual;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
-public abstract class Starter {
+public abstract class StarterView {
     public static Scene startScene(){
         BorderPane pane = new BorderPane();
         pane.setPadding(new Insets(50, 15, 25, 15));

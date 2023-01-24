@@ -1,8 +1,8 @@
-package codes.library.texts;
+package codes.bookstore.texts;
 
-import codes.library.insider.Book;
-import codes.library.insider.Bill;
-import codes.library.insider.people.Librarian;
+import codes.bookstore.insider.Book;
+import codes.bookstore.insider.Bill;
+import codes.bookstore.insider.people.Librarian;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,7 +25,7 @@ public abstract class Warehouse {
             for (; input.hasNext(); ) {
                 String lib = input.nextLine();
                 Scanner in = new Scanner(lib);
-                librarians.add(new Librarian(in.next(),in.nextInt(),in.next(),new Date(in.next()),in.next(),in.next(),in.nextDouble(),in.nextBoolean()));
+                //librarians.add(new Librarian(in.next(),in.nextInt(),in.next(),new Date(in.next()),in.next(),in.next(),in.nextDouble(),in.nextBoolean()));
                 System.out.println(librarians.get(0));
             }
         } catch (FileNotFoundException e) {

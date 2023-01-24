@@ -1,21 +1,15 @@
-package codes.library;
+package codes.bookstore;
 
-import codes.library.visual.Starter;
+import codes.bookstore.visual.StarterView;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import codes.library.texts.Warehouse;
-import javafx.scene.Scene;
-import javafx.scene.paint.*;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.scene.text.*;
-import javafx.scene.shape.*;
-import javafx.geometry.*;
+import codes.bookstore.texts.Warehouse;
+
 public class Main extends Application{
     @Override
     public void start(Stage stage){
         stage.setTitle("Enter");
-        stage.setScene(Starter.startScene());
+        stage.setScene(StarterView.startScene());
         stage.setResizable(false);
         stage.show();
     }

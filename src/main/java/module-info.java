@@ -3,6 +3,6 @@ module codes.library {
     requires javafx.fxml;
 
 
-    opens codes.library to javafx.fxml;
-    exports codes.library;
+    opens codes.bookstore to javafx.fxml;
+    exports codes.bookstore;
 }
