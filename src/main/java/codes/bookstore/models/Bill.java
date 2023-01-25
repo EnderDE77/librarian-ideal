@@ -2,11 +2,12 @@ package codes.bookstore.models;
 
 import codes.bookstore.models.people.Librarian;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Bill {
+public class Bill implements Serializable {
     private int billID;
     private Librarian sellingLibrarian;
     private ArrayList<Book> sellingBooks;

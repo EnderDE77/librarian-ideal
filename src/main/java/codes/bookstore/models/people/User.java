@@ -1,42 +1,46 @@
 package codes.bookstore.models.people;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
 public class User implements Serializable {
-    private String username;
-    private String pass;
-    private int ID;
-    private String name;
+    private SimpleStringProperty username;
+    private SimpleStringProperty pass;
+    private SimpleIntegerProperty ID;
+    private SimpleStringProperty name;
     private Date bDay;
-    private String PhoneNo;
-    private String email;
-    private double salary;
+    private SimpleStringProperty phoneNo;
+    private SimpleStringProperty email;
+    private SimpleDoubleProperty salary;
     private AccessLevel accessLevel;
 
     public User(String username, String pass, int id, String name, Date bDay, String phoneNo, String email, double salary,AccessLevel accessLevel) {
-        this.username = username;
-        this.pass = pass;
-        this.ID = id;
-        this.name = name;
+        this.username = new SimpleStringProperty(username);
+        this.pass = new SimpleStringProperty(pass);
+        this.ID = new SimpleIntegerProperty(id);
+        this.name = new SimpleStringProperty(name);
         this.bDay = bDay;
-        this.PhoneNo = phoneNo;
-        this.email = email;
-        this.salary = salary;
+        this.phoneNo = new SimpleStringProperty(phoneNo);
+        this.email = new SimpleStringProperty(email);
+        this.salary = new SimpleDoubleProperty(salary);
         this.accessLevel = accessLevel;
     }
     public int getID(){
-        return this.ID;
+        return this.ID.get();
     }
     public void setID(int ID){
-        this.ID = ID;
+        this.ID.set(ID);
     }
     public String getName() {
-        return name;
+        return name.get();
     }
     public void setName(String name) {
-        this.name = name;
+        this.name.set(name);
     }
     public Date getbDay() {
         return bDay;
@@ -45,34 +49,34 @@ public class User implements Serializable {
         this.bDay = bDay;
     }
     public String getPhoneNo() {
-        return PhoneNo;
+        return phoneNo.get();
     }
     public void setPhoneNo(String phoneNo) {
-        PhoneNo = phoneNo;
+        this.phoneNo.set(phoneNo);
     }
     public String getEmail() {
-        return email;
+        return email.get();
     }
     public void setEmail(String email) {
-        this.email = email;
+        this.email.set(email);
     }
     public double getSalary() {
-        return salary;
+        return salary.get();
     }
     public void setSalary(double salary) {
-        this.salary = salary;
+        this.salary.set(salary);
     }
     public String getPass(){
-        return this.pass;
+        return this.pass.get();
     }
     public void setPass(String pass){
-        this.pass = pass;
+        this.pass.set(pass);
     }
     public String getUsername() {
-        return username;
+        return username.get();
     }
     public void setUsername(String username) {
-        this.username = username;
+        this.username.set(username);
     }
     public AccessLevel getAccessLevel() {
         return accessLevel;
