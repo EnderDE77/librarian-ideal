@@ -27,9 +27,9 @@ public abstract class Warehouse {
             File mans = new File("src/main/java/codes/bookstore/texts/people/managers.txt");
             File adms = new File("src/main/java/codes/bookstore/texts/people/administrators.txt");
             File boks = new File("src/main/java/codes/bookstore/texts/books.txt");
-            Scanner input = new Scanner(libs);
+            Scanner input = new Scanner(libs),in;
             while(input.hasNext()){
-                Scanner in = new Scanner(input.nextLine());
+                in = new Scanner(input.nextLine());
                 Librarian u = new Librarian(in.next(),in.next(),in.nextInt(),in.next(),dateFor.parse(in.next()),in.next(),in.next(),in.nextDouble());
                 users.add(u);
                 System.out.println(u);
@@ -38,7 +38,7 @@ public abstract class Warehouse {
             input.close();
             input = new Scanner(mans);
             while(input.hasNext()){
-                Scanner in = new Scanner(input.nextLine());
+                in = new Scanner(input.nextLine());
                 Manager u = new Manager(in.next(),in.next(),in.nextInt(),in.next(),dateFor.parse(in.next()),in.next(),in.next(),in.nextDouble());
                 users.add(u);
                 System.out.println(u);
@@ -47,15 +47,16 @@ public abstract class Warehouse {
             input.close();
             input = new Scanner(adms);
             while(input.hasNext()){
-                Scanner in = new Scanner(input.nextLine());
+                in = new Scanner(input.nextLine());
                 Admin u = new Admin(in.next(),in.next(),in.nextInt(),in.next(),dateFor.parse(in.next()),in.next(),in.next(),in.nextDouble());
                 users.add(u);
                 System.out.println(u);
                 in.close();
             }
+            input.close();
             input = new Scanner(boks);
             while(input.hasNext()){
-                Scanner in = new Scanner(input.nextLine());
+                in = new Scanner(input.nextLine());
                 Book u = new Book(in.next(),in.next(),in.nextInt(),in.next(),in.next(),in.next(),in.nextDouble(),in.nextDouble(),in.nextInt());
                 books.add(u);
                 System.out.println(u);
@@ -67,12 +68,12 @@ public abstract class Warehouse {
             noOfBills = input.nextInt();
             input.nextLine();
             while(input.hasNext()){
-                Scanner in = new Scanner(input.nextLine());
+                in = new Scanner(input.nextLine());
+
                 in.close();
             }
             input.close();
 
-            input.close();
         } catch (FileNotFoundException e) {
             System.out.println(e);
         } catch (ParseException e) {
@@ -80,7 +81,16 @@ public abstract class Warehouse {
         }
 
     }
-    public static void finish(){
+    public static ArrayList<Book> getBooks(){
+        return books;
+    }
+    public static ArrayList<User> getUsers(){
+        return users;
+    }
+    public static ArrayList<Bill> getBills(){
+        return bills;
+    }
 
+    public static void finish(){
     }
 }

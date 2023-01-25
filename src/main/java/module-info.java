@@ -1,4 +1,4 @@
-module codes.library {
+module codes.bookstore {
     requires javafx.controls;
     requires javafx.fxml;
 
