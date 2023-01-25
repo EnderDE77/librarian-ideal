@@ -1,4 +1,4 @@
-package codes.bookstore.insider.people;
+package codes.bookstore.models.people;
 
 public enum AccessLevel {
     LIBRARIAN,

@@ -1,4 +1,4 @@
-package codes.bookstore.visual;
+package codes.bookstore.view;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

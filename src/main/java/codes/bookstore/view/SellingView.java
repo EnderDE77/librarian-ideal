@@ -1,6 +1,6 @@
-package codes.bookstore.visual;
+package codes.bookstore.view;
 
-import codes.bookstore.insider.people.Librarian;
+import codes.bookstore.models.people.Librarian;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;

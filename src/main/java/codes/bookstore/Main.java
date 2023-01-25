@@ -1,6 +1,6 @@
 package codes.bookstore;
 
-import codes.bookstore.visual.StarterView;
+import codes.bookstore.view.StarterView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import codes.bookstore.texts.Warehouse;
@@ -16,5 +16,6 @@ public class Main extends Application{
     public static void main(String[] args){
        Warehouse.ready();
        Application.launch(args);
+       //Warehouse.finish();
     }
 }

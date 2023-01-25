@@ -1,6 +1,7 @@
-package codes.bookstore.insider.people;
+package codes.bookstore.models.people;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 public class User implements Serializable {
@@ -12,8 +13,9 @@ public class User implements Serializable {
     private String PhoneNo;
     private String email;
     private double salary;
+    private AccessLevel accessLevel;
 
-    public User(String username, String pass, int id, String name, Date bDay, String phoneNo, String email, double salary) {
+    public User(String username, String pass, int id, String name, Date bDay, String phoneNo, String email, double salary,AccessLevel accessLevel) {
         this.username = username;
         this.pass = pass;
         this.ID = id;
@@ -22,6 +24,7 @@ public class User implements Serializable {
         this.PhoneNo = phoneNo;
         this.email = email;
         this.salary = salary;
+        this.accessLevel = accessLevel;
     }
     public int getID(){
         return this.ID;
@@ -36,7 +39,7 @@ public class User implements Serializable {
         this.name = name;
     }
     public Date getbDay() {
-        return new Date(bDay.getTime());
+        return bDay;
     }
     public void setbDay(Date bDay) {
         this.bDay = bDay;
@@ -65,17 +68,22 @@ public class User implements Serializable {
     public void setPass(String pass){
         this.pass = pass;
     }
-
-    @Override
-    public String toString() {
-        return getName()+" "+getID()+" "+getPhoneNo()+" "+getPass();
-    }
-
     public String getUsername() {
         return username;
     }
-
     public void setUsername(String username) {
         this.username = username;
+    }
+    public AccessLevel getAccessLevel() {
+        return accessLevel;
+    }
+    public void setAccessLevel(AccessLevel accessLevel) {
+        this.accessLevel = accessLevel;
+    }
+    @Override
+    public String toString() {
+        Calendar time = Calendar.getInstance();
+        time.setTime(bDay);
+        return getUsername()+" "+getPass()+" "+getID()+" "+getName()+" "+time.get(Calendar.YEAR)+" "+getPhoneNo()+" "+getSalary()+" "+getAccessLevel().toString();
     }
 }
