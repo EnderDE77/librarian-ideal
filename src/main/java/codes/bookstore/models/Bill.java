@@ -43,7 +43,8 @@ public class Bill {
         for(Book x:sellingBooks){
             bill.append(x.toString()+"\n");
         }
-        bill.append("Total price: "+this.getTotalPrice());
+        bill.append("Total price: "+this.getTotalPrice()+"\n");
+        bill.append("Librarian name: "+sellingLibrarian.getName());
         return bill.toString();
     }
 

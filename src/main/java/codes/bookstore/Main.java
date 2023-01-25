@@ -16,6 +16,6 @@ public class Main extends Application{
     public static void main(String[] args){
        Warehouse.ready();
        Application.launch(args);
-       //Warehouse.finish();
+       Warehouse.finish();
     }
 }

@@ -26,7 +26,7 @@ public abstract class Warehouse {
             File libs = new File("src/main/java/codes/bookstore/texts/people/librarians.txt");
             File mans = new File("src/main/java/codes/bookstore/texts/people/managers.txt");
             File adms = new File("src/main/java/codes/bookstore/texts/people/administrators.txt");
-            File boks = new File("src/main/java/codes/bookstore/texts/people/books.txt");
+            File boks = new File("src/main/java/codes/bookstore/texts/books.txt");
             Scanner input = new Scanner(libs);
             while(input.hasNext()){
                 Scanner in = new Scanner(input.nextLine());
@@ -53,12 +53,34 @@ public abstract class Warehouse {
                 System.out.println(u);
                 in.close();
             }
+            input = new Scanner(boks);
+            while(input.hasNext()){
+                Scanner in = new Scanner(input.nextLine());
+                Book u = new Book(in.next(),in.next(),in.nextInt(),in.next(),in.next(),in.next(),in.nextDouble(),in.nextDouble(),in.nextInt());
+                books.add(u);
+                System.out.println(u);
+                in.close();
+            }
+            input.close();
+            //WHE program
+            input = new Scanner(whe);
+            noOfBills = input.nextInt();
+            input.nextLine();
+            while(input.hasNext()){
+                Scanner in = new Scanner(input.nextLine());
+                in.close();
+            }
+            input.close();
+
             input.close();
         } catch (FileNotFoundException e) {
             System.out.println(e);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-    }
 
+    }
+    public static void finish(){
+
+    }
 }
