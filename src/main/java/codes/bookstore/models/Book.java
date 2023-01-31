@@ -6,7 +6,6 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.io.Serializable;
 
-//TODO: Create class Book with the values and constructors
 public class Book implements Serializable {
     private SimpleStringProperty title;
     private SimpleStringProperty author;

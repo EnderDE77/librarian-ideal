@@ -1,6 +1,8 @@
 package codes.bookstore.models.people;
 
-public enum AccessLevel {
+import java.io.Serializable;
+
+public enum AccessLevel implements Serializable {
     LIBRARIAN,
     MANAGER,
     ADMIN

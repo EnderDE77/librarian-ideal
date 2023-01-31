@@ -13,7 +13,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-//TODO: add the amount of bills to WHE and use it as a STATIC value
 public abstract class Warehouse {
     static int noOfBills;
     static SimpleDateFormat dateFor = new SimpleDateFormat("dd/MM/yyyy");
@@ -27,6 +26,7 @@ public abstract class Warehouse {
             File mans = new File("src/main/java/codes/bookstore/texts/people/managers.txt");
             File adms = new File("src/main/java/codes/bookstore/texts/people/administrators.txt");
             File boks = new File("src/main/java/codes/bookstore/texts/books.txt");
+            File billSrc = new File("src/main/java/codes/bookstore/texts/bills/bills.dat");
             Scanner input = new Scanner(libs),in;
             while(input.hasNext()){
                 in = new Scanner(input.nextLine());
@@ -54,6 +54,7 @@ public abstract class Warehouse {
                 in.close();
             }
             input.close();
+            
             input = new Scanner(boks);
             while(input.hasNext()){
                 in = new Scanner(input.nextLine());
@@ -67,7 +68,7 @@ public abstract class Warehouse {
             input = new Scanner(whe);
             noOfBills = input.nextInt();
             input.nextLine();
-            while(input.hasNext()){
+            while(input.hasNext()) {
                 in = new Scanner(input.nextLine());
 
                 in.close();
@@ -81,6 +82,14 @@ public abstract class Warehouse {
         }
 
     }
+    public static User searchUser(String username,String pass){
+        for(User x: getUsers()){
+            if(x.getUsername().equals(username)&&x.getPass().equals(pass)){
+                return x;
+            }
+        }
+        return null;
+    }
     public static ArrayList<Book> getBooks(){
         return books;
     }
@@ -92,5 +101,6 @@ public abstract class Warehouse {
     }
 
     public static void finish(){
+
     }
 }

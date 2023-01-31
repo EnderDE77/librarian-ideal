@@ -1,9 +1,8 @@
 package codes.bookstore;
 
-import codes.bookstore.models.people.Librarian;
-import codes.bookstore.view.SellingView;
 import codes.bookstore.view.StarterView;
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import codes.bookstore.texts.Warehouse;
 
@@ -11,7 +10,8 @@ public class Main extends Application{
     @Override
     public void start(Stage stage){
         stage.setTitle("Enter");
-        stage.setScene(SellingView.startScene((Librarian) Warehouse.getUsers().get(0)));
+        Scene scene = new Scene(StarterView.startScene(),1000,750);
+        stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
     }
