@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Bill implements Serializable {
+    //TODO: make Bill completely serializable
     @Serial
     private static final long serialVersionUID = 77777;
     private int billID;

@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 
 public abstract class LibrarianView {
+    //TODO: sign up an user you feel right and find out how to take care of the librarian's scene
     public static Pane startScene(Librarian lib){
         Pane pane = new Pane();
         VBox inner = new VBox(20);
