@@ -2,11 +2,14 @@ package bookstore.models.people;
 
 import javafx.beans.property.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
 public class User implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 500500;
     private transient StringProperty username;
     private String usernameP;
     private transient StringProperty pass;

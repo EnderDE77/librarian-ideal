@@ -2,9 +2,12 @@ package bookstore.models;
 
 import javafx.beans.property.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class Book implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 58008;
     private transient StringProperty title;
     private String titleP;
     private transient StringProperty author;

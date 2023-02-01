@@ -22,25 +22,14 @@ public abstract class Warehouse {
     private static final File fWHE = new File("src/main/java/bookstore/texts/bin/WHE.dat");
     public static void ready() {
         try {
-            File whe = new File("src/main/java/bookstore/texts/WHE.txt");
-            File boks = new File("src/main/java/bookstore/texts/books.txt");
-            Scanner input,in;
             FileInputStream  out;
             ObjectInputStream objOut;
             out = new FileInputStream(fUsers);
             objOut = new ObjectInputStream(out);
             users = (ArrayList<User>) objOut.readObject();
             out = new FileInputStream(fBooks);
+            objOut = new ObjectInputStream(out);
             books = (ArrayList<Book>) objOut.readObject();
-            //WHE program
-            input = new Scanner(whe);
-            input.nextLine();
-            while(input.hasNext()) {
-                in = new Scanner(input.nextLine());
-
-                in.close();
-            }
-            input.close();
             out.close();
             objOut.close();
         } catch (IOException | ClassNotFoundException e) {
@@ -69,10 +58,11 @@ public abstract class Warehouse {
         try{
             FileOutputStream fOut;
             ObjectOutputStream oOut;
-            fOut =  new FileOutputStream(fUsers);
+            fOut = new FileOutputStream(fUsers);
             oOut = new ObjectOutputStream(fOut);
             oOut.writeObject(getUsers());
             fOut = new FileOutputStream(fBooks);
+            oOut = new ObjectOutputStream(fOut);
             oOut.writeObject(getBooks());
             fOut.close();
             oOut.close();
@@ -85,12 +75,14 @@ public abstract class Warehouse {
         if(!(searchUser(username,pass) == null))return false;
         if(!email.matches("\\w+@\\w+\\.\\w+"))return false;
         if(!pass.equals(confPass))return false;
+        if(!phoneNo.matches("06[6-9]\\d{7}"))return false;
+        if(username.length()==0||pass.length()==0||name.length()==0)return false;
         try {
         switch(accessLevel){
             case LIBRARIAN -> users.add(new Librarian(username,pass,users.size()+1000,name,dateFor.parse(bDay),phoneNo,email,20000));
-            case MANAGER -> users.add(new Manager(username,pass,users.size()+1000,name,dateFor.parse(bDay),phoneNo,email,40000));
-            case ADMIN -> users.add(new Admin(username,pass,users.size()+1000,name,dateFor.parse(bDay),phoneNo,email,80000));
-        }
+            case   MANAGER -> users.add(new Manager  (username,pass,users.size()+1000,name,dateFor.parse(bDay),phoneNo,email,40000));
+            case     ADMIN -> users.add(new Admin    (username,pass,users.size()+1000,name,dateFor.parse(bDay),phoneNo,email,80000));
+            }
         } catch (ParseException e) {
             System.out.println(e);
         }
