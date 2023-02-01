@@ -1,18 +1,16 @@
-package codes.bookstore.view;
+package bookstore.view;
 
-import codes.bookstore.models.people.Admin;
-import codes.bookstore.models.people.Librarian;
-import codes.bookstore.models.people.Manager;
-import codes.bookstore.models.people.User;
-import codes.bookstore.texts.Warehouse;
+import bookstore.models.people.Admin;
+import bookstore.models.people.Librarian;
+import bookstore.models.people.Manager;
+import bookstore.models.people.User;
+import bookstore.texts.Warehouse;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;

@@ -1,8 +1,8 @@
-package codes.bookstore.view;
+package bookstore.view;
 
-import codes.bookstore.models.Book;
-import codes.bookstore.models.people.Librarian;
-import codes.bookstore.texts.Warehouse;
+import bookstore.models.Book;
+import bookstore.models.people.Librarian;
+import bookstore.texts.Warehouse;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

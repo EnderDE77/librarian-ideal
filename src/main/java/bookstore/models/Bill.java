@@ -1,6 +1,6 @@
-package codes.bookstore.models;
+package bookstore.models;
 
-import codes.bookstore.models.people.Librarian;
+import bookstore.models.people.Librarian;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -1,7 +1,6 @@
-package codes.bookstore.view;
+package bookstore.view;
 
-import codes.bookstore.models.people.Admin;
-import javafx.scene.Scene;
+import bookstore.models.people.Admin;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;

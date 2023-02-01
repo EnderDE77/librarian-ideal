@@ -1,6 +1,5 @@
-package codes.bookstore.models.people;
+package bookstore.models.people;
 
-import java.util.Calendar;
 import java.util.Date;
 
 public class Admin extends User{

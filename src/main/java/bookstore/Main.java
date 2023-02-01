@@ -1,10 +1,10 @@
-package codes.bookstore;
+package bookstore;
 
-import codes.bookstore.view.StarterView;
+import bookstore.view.StarterView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import codes.bookstore.texts.Warehouse;
+import bookstore.texts.Warehouse;
 
 public class Main extends Application{
     @Override

@@ -1,4 +1,4 @@
-package codes.bookstore.models.people;
+package bookstore.models.people;
 
 import java.io.Serializable;
 

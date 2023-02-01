@@ -1,6 +1,5 @@
-package codes.bookstore.models.people;
+package bookstore.models.people;
 
-import java.util.Calendar;
 import java.util.Date;
 public class Manager extends User {
     public Manager(String username, String pass, int id, String name, Date bDay, String phoneNo, String email, double salary) {
