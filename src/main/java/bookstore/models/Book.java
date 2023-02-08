@@ -1,5 +1,7 @@
 package bookstore.models;
 
+import bookstore.models.attributes.Author;
+import bookstore.models.attributes.Category;
 import javafx.beans.property.*;
 
 import java.io.Serial;
@@ -10,12 +12,10 @@ public class Book implements Serializable {
     private static final long serialVersionUID = 58008;
     private transient StringProperty title;
     private String titleP;
-    private transient StringProperty author;
-    private String authorP;
+    private Author author;
     private transient IntegerProperty noOfPages;
     private Integer noOfPagesP;
-    private transient StringProperty category;
-    private String categoryP;
+    private Category category;
     private transient StringProperty ISBN;
     private String ISBNP;
     private transient StringProperty supplier;
@@ -29,9 +29,9 @@ public class Book implements Serializable {
 
     public Book(String title, String author, int noOfPages, String category, String ISBN, String supplier, double purchasedPrice, double sellingPrice, int stock) {
         this.titleP = title;
-        this.authorP = author;
+        this.author = new Author(author);
         this.noOfPagesP = noOfPages;
-        this.categoryP = category;
+        this.category = new Category(category);
         this.ISBNP = ISBN;
         this.supplierP = supplier;
         this.purchasedPriceP = purchasedPrice;
@@ -39,16 +39,12 @@ public class Book implements Serializable {
         this.stockP = stock;
     }
 
-
-
     public String getAuthor() {
-        if(this.author == null)setAuthor(authorP);
-        return author.get();
+        return author.getAuthor();
     }
 
     public void setAuthor(String author) {
-        this.author = new SimpleStringProperty(author);
-        this.authorP = author;
+        this.author.setAuthor(author);
     }
 
     public String getTitle() {
@@ -74,14 +70,12 @@ public class Book implements Serializable {
     }
 
     public String getCategory() {
-        if(this.category == null)setCategory(categoryP);
-        return category.get();
+        return category.getCategory();
     }
 
 
     public void setCategory(String category) {
-        this.category = new SimpleStringProperty(category);
-        this.categoryP = category;
+        this.category.setCategory(category);
     }
 
     public String getISBN() {
