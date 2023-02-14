@@ -27,11 +27,11 @@ public class Book implements Serializable {
     private transient IntegerProperty stock;
     private Integer stockP;
 
-    public Book(String title, String author, int noOfPages, String category, String ISBN, String supplier, double purchasedPrice, double sellingPrice, int stock) {
+    public Book(String title, Author author, int noOfPages, Category category, String ISBN, String supplier, double purchasedPrice, double sellingPrice, int stock) {
         this.titleP = title;
-        this.author = new Author(author);
+        this.author = author;
         this.noOfPagesP = noOfPages;
-        this.category = new Category(category);
+        this.category = category;
         this.ISBNP = ISBN;
         this.supplierP = supplier;
         this.purchasedPriceP = purchasedPrice;

@@ -2,6 +2,8 @@ package bookstore.texts;
 
 import bookstore.models.Book;
 import bookstore.models.Bill;
+import bookstore.models.attributes.Author;
+import bookstore.models.attributes.Category;
 import bookstore.models.people.*;
 
 import java.io.*;
@@ -16,6 +18,8 @@ public abstract class Warehouse {
     private static ArrayList<User> users = new ArrayList<>();
     private static ArrayList<Book> books = new ArrayList<>();
     private static ArrayList<Bill> bills = new ArrayList<>();
+    private static ArrayList<Author> authors = new ArrayList<>();
+    private static ArrayList<Category> categories = new ArrayList<>();
     private static final File fUsers = new File("src/main/java/bookstore/texts/bin/users.dat");
     private static final File fBooks = new File("src/main/java/bookstore/texts/bin/books.dat");
     private static final File fBills = new File("src/main/java/bookstore/texts/bin/bills.dat");
@@ -33,6 +37,10 @@ public abstract class Warehouse {
             out = new FileInputStream(fBills);
             objOut = new ObjectInputStream(out);
             bills = (ArrayList<Bill>) objOut.readObject();
+            out = new FileInputStream(fWHE);
+            objOut = new ObjectInputStream(out);
+            authors = (ArrayList<Author>) objOut.readObject();
+            categories = (ArrayList<Category>) objOut.readObject();
             out.close();
             objOut.close();
         } catch (IOException | ClassNotFoundException e) {
@@ -56,6 +64,12 @@ public abstract class Warehouse {
     public static ArrayList<Bill> getBills(){
         return bills;
     }
+    public static ArrayList<Author> getAuthors() {
+        return authors;
+    }
+    public static ArrayList<Category> getCategories(){
+        return categories;
+    }
 
     public static void finish(){
         try{
@@ -70,6 +84,10 @@ public abstract class Warehouse {
             fOut = new FileOutputStream(fBills);
             oOut = new ObjectOutputStream(fOut);
             oOut.writeObject(getBills());
+            fOut = new FileOutputStream(fWHE);
+            oOut = new ObjectOutputStream(fOut);
+            oOut.writeObject(getAuthors());
+            oOut.writeObject(getCategories());
             fOut.close();
             oOut.close();
          } catch (IOException e) {
@@ -91,6 +109,7 @@ public abstract class Warehouse {
             }
         } catch (ParseException e) {
             System.out.println(e);
+            return false;
         }
         return true;
     }
@@ -128,7 +147,7 @@ public abstract class Warehouse {
             System.out.println(e);
             return false;
         }
-        Bill billy = new Bill(bills.size()+1,lib,bill);
+        Bill billy = new Bill(bills.size()+1,lib,bill,true);
         try(PrintWriter out = new PrintWriter(fOrder)) {
             out.println(billy);
         } catch (FileNotFoundException e) {
@@ -138,4 +157,5 @@ public abstract class Warehouse {
         bills.add(billy);
         return true;
     }
+
 }

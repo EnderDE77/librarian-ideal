@@ -1,10 +1,7 @@
 package bookstore.models;
 
 import bookstore.models.people.Librarian;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.*;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -22,17 +19,34 @@ public class Bill implements Serializable {
     private final Date dateOfTransaction;
     private transient DoubleProperty totalPrice;
     private Double totalPriceP;
+    private BooleanProperty selling;
+    private Boolean sellingP;
+    public Bill(int billID,Librarian sellingLibrarian, ArrayList<Book> sellingBooks,boolean selling) {
+        if (selling) {
 
-    public Bill(int billID,Librarian sellingLibrarian, ArrayList<Book> sellingBooks) {
-        this.billIDP = billID;
-        setBillID(billID);
-        this.sellingLibrarian = sellingLibrarian;
-        this.sellingBooks = sellingBooks;
-        this.dateOfTransaction = new Date();
-        setTotalPrice(0.0);
-        for(Book x:sellingBooks){
-            x.setStock(x.getStock()-1);
-            setTotalPrice(getTotalPrice()+x.getSellingPrice());
+            this.billIDP = billID;
+            setBillID(billID);
+            this.sellingLibrarian = sellingLibrarian;
+            this.sellingBooks = sellingBooks;
+            this.dateOfTransaction = new Date();
+            setTotalPrice(0.0);
+            for (Book x : sellingBooks) {
+                x.setStock(x.getStock() - 1);
+                setTotalPrice(getTotalPrice() + x.getSellingPrice());
+            }
+        }
+        else{
+
+            this.billIDP = billID;
+            setBillID(billID);
+            this.sellingLibrarian = sellingLibrarian;
+            this.sellingBooks = sellingBooks;
+            this.dateOfTransaction = new Date();
+            setTotalPrice(0.0);
+            for (Book x : sellingBooks) {
+                x.setStock(x.getStock() - 1);
+                setTotalPrice(getTotalPrice() + x.getPurchasedPrice());
+            }
         }
     }
     private void setBillID(int billID){
@@ -44,17 +58,22 @@ public class Bill implements Serializable {
         return this.totalPrice.get();
     }
 
-    private void setTotalPrice(Double totalPrice) {
+    private void setTotalPrice(double totalPrice) {
         this.totalPrice = new SimpleDoubleProperty(totalPrice);
         this.totalPriceP = totalPrice;
     }
 
     public int getBillID() {
         if(this.billID == null)setBillID(billIDP);
-        return billID.get();
+        return this.billID.get();
     }
-    public void addBook(Book bookSold){
-        sellingBooks.add(bookSold);
+    public void setSelling(boolean selling){
+        this.selling = new SimpleBooleanProperty(selling);
+        this.sellingP = selling;
+    }
+    public boolean isSelling(){
+        if(this.selling == null)setSelling(sellingP);
+        return this.selling.get();
     }
     @Override
     public String toString() {
