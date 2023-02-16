@@ -35,7 +35,11 @@ public abstract class StarterView {
 
         HBox bottom = new HBox(20);
         Button btEnter = new Button("Enter");
+        btEnter.setMinWidth(150);
+        btEnter.setMinHeight(70);
         Button btSignUp = new Button("Sign up");
+        btSignUp.setMinWidth(150);
+        btSignUp.setMinHeight(70);
         bottom.setAlignment(Pos.CENTER);
         bottom.getChildren().addAll(btEnter,btSignUp);
 

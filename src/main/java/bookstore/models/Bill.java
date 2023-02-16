@@ -2,6 +2,7 @@ package bookstore.models;
 
 import bookstore.models.people.Librarian;
 import bookstore.models.people.User;
+import bookstore.texts.Warehouse;
 import javafx.beans.property.*;
 
 import java.io.Serial;
@@ -33,7 +34,7 @@ public class Bill implements Serializable {
             this.dateOfTransaction = new Date();
             setTotalPrice(0.0);
             for (Book x : sellingBooks) {
-                x.setStock(x.getStock() - 1);
+                Warehouse.getBooks().get(Warehouse.getBooks().indexOf(x)).setStock(Warehouse.getBooks().get(Warehouse.getBooks().indexOf(x)).getStock()-1);
                 setTotalPrice(getTotalPrice() + x.getSellingPrice());
             }
         }
@@ -46,7 +47,7 @@ public class Bill implements Serializable {
             this.dateOfTransaction = new Date();
             setTotalPrice(0.0);
             for (Book x : sellingBooks) {
-                x.setStock(x.getStock() - 1);
+                Warehouse.getBooks().get(Warehouse.getBooks().indexOf(x)).setStock(Warehouse.getBooks().get(Warehouse.getBooks().indexOf(x)).getStock()+1);
                 setTotalPrice(getTotalPrice() + x.getPurchasedPrice());
             }
         }

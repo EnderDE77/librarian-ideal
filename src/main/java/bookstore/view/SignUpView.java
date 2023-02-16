@@ -88,7 +88,11 @@ public abstract class SignUpView {
         GridPane bts = new GridPane();
         bts.setHgap(20);
         Button btLogIn = new Button("Log in");
+        btLogIn.setMinWidth(150);
+        btLogIn.setMinHeight(70);
         Button btSignUp = new Button("Sign up");
+        btSignUp.setMinWidth(150);
+        btSignUp.setMinHeight(70);
         bts.add(btLogIn,0,0);
         bts.add(btSignUp,1,0);
         bts.setAlignment(Pos.BOTTOM_CENTER);

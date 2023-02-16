@@ -10,6 +10,8 @@ public abstract class AdminView {
     public static Pane startScene(Admin admin){
         FlowPane pane = new FlowPane();
         Button btShowFinance = new Button("Show Finance");
+        btShowFinance.setMinWidth(150);
+        btShowFinance.setMinHeight(70);
         pane.getChildren().addAll(btShowFinance);
         return pane;
     }

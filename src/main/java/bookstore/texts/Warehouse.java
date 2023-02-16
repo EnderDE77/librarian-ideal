@@ -24,25 +24,25 @@ public abstract class Warehouse {
     private static ArrayList<Category> categories = new ArrayList<>();
     private static final File fUsers = new File("src/main/java/bookstore/texts/bin/users.dat");
     private static final File fBooks = new File("src/main/java/bookstore/texts/bin/books.dat");
-    private static final File fBills = new File("src/main/java/bookstore/texts/bin/bills.dat");
+    //private static final File fBills = new File("src/main/java/bookstore/texts/bin/bills.dat");
     private static final File fWHE = new File("src/main/java/bookstore/texts/bin/WHE.dat");
     public static void ready() {
         try {
             FileInputStream  out;
             ObjectInputStream objOut;
+            out = new FileInputStream(fWHE);
+            objOut = new ObjectInputStream(out);
+            authors = (ArrayList<Author>) objOut.readObject();
+            categories = (ArrayList<Category>) objOut.readObject();
             out = new FileInputStream(fUsers);
             objOut = new ObjectInputStream(out);
             users = (ArrayList<User>) objOut.readObject();
             out = new FileInputStream(fBooks);
             objOut = new ObjectInputStream(out);
             books = (ArrayList<Book>) objOut.readObject();
-            out = new FileInputStream(fBills);
-            objOut = new ObjectInputStream(out);
-            bills = (ArrayList<Bill>) objOut.readObject();
-            out = new FileInputStream(fWHE);
-            objOut = new ObjectInputStream(out);
-            authors = (ArrayList<Author>) objOut.readObject();
-            categories = (ArrayList<Category>) objOut.readObject();
+            //out = new FileInputStream(fBills);
+            //objOut = new ObjectInputStream(out);
+           // bills = (ArrayList<Bill>) objOut.readObject();
             out.close();
             objOut.close();
             for(Bill x: getBills()){
@@ -52,6 +52,7 @@ public abstract class Warehouse {
         } catch (IOException | ClassNotFoundException e) {
             System.out.println(e);
         }
+        test();
     }
     public static void finish(){
         try{
@@ -63,9 +64,9 @@ public abstract class Warehouse {
             fOut = new FileOutputStream(fBooks);
             oOut = new ObjectOutputStream(fOut);
             oOut.writeObject(getBooks());
-            fOut = new FileOutputStream(fBills);
-            oOut = new ObjectOutputStream(fOut);
-            oOut.writeObject(getBills());
+           // fOut = new FileOutputStream(fBills);
+           // oOut = new ObjectOutputStream(fOut);
+           // oOut.writeObject(getBills());
             fOut = new FileOutputStream(fWHE);
             oOut = new ObjectOutputStream(fOut);
             oOut.writeObject(getAuthors());
@@ -74,6 +75,34 @@ public abstract class Warehouse {
             oOut.close();
         } catch (IOException e) {
             System.out.println(e);
+        }
+    }
+    private static void test(){
+        for(User x:getUsers()){
+            int i=1;
+            System.out.println(i+" "+x);
+            i++;
+        }
+        for(Book x:getBooks()){
+            int i=1;
+            System.out.println(i+" "+x);
+            i++;
+        }
+        for(Bill x:getBills()){
+            int i=1;
+            if(!x.isSelling())continue;
+            System.out.println(i+" "+x);
+            i++;
+        }
+        for(Category x:getCategories()){
+            int i=1;
+            System.out.println(i+" "+x);
+            i++;
+        }
+        for(Author x:getAuthors()){
+            int i=1;
+            System.out.println(i+" "+x);
+            i++;
         }
     }
 
@@ -127,11 +156,20 @@ public abstract class Warehouse {
         }
         return null;
     }
-    public static boolean enterBook(ArrayList<Book> bill,String title,String ISBN,String amount){
+    public static boolean enterBillBook(ArrayList<Book> bill,String title,String ISBN,String amount){
         Book adder = searchBook(title,ISBN);
         if(adder == null) return false;
         if(!amount.matches("\\d+"))return false;
-        if(Integer.parseInt(amount) < adder.getStock())return false;
+        if(Integer.parseInt(amount) > adder.getStock())return false;
+        for(int i=0;i<Integer.parseInt(amount);i++){
+            bill.add(adder);
+        }
+        return true;
+    }
+    public static boolean enterBobBook(ArrayList<Book> bill,String title,String ISBN,String amount){
+        Book adder = searchBook(title,ISBN);
+        if(adder == null) return false;
+        if(!amount.matches("\\d+"))return false;
         for(int i=0;i<Integer.parseInt(amount);i++){
             bill.add(adder);
         }
