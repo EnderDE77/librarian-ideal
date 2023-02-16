@@ -4,21 +4,21 @@ import bookstore.models.Book;
 import bookstore.models.people.Manager;
 import bookstore.texts.Warehouse;
 import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 import java.util.ArrayList;
 
 public abstract class ManagerView {
     public static Pane startScene(Manager man){
-        Pane pane = new BorderPane();
+        Pane pane = new Pane();
+        BorderPane pan = new BorderPane();
+        pan.setPadding(new Insets(80));
         VBox left = new VBox(20);
         Button btAddBooks = new Button("Add Books");
         btAddBooks.setMinWidth(100);
@@ -33,9 +33,7 @@ public abstract class ManagerView {
         btStatistics.setMinWidth(100);
         btStatistics.setMinHeight(50);
         left.getChildren().addAll(btAddBooks,btBookStock,btLogOut,btStatistics);
-        ArrayList<Book> u5 = new ArrayList<>();
-        left.setLayoutX(25);
-        left.setLayoutY(45);
+        ArrayList<Book> u5 = new ArrayList<>();left.setMinWidth(150);
         Pane center = new Pane();
         for(Book x : Warehouse.getBooks()){
             if(x.getStock()<=5){
@@ -59,12 +57,14 @@ public abstract class ManagerView {
         bStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
         tvU5.getColumns().addAll(bISBN,bName,bStock);
         center.getChildren().add(tvU5);
-        pane.getChildren().addAll(left,center);
+        pan.setLeft(left);
+        pan.setCenter(center);
         center.setLayoutX(150);
-        btBookStock.setOnAction(e->btBookStock.getScene().setRoot(BookStockView.startScene()));
-        btAddBooks.setOnAction(e->btAddBooks.getScene().setRoot(AddBooksView.startScene()));
+        pane.getChildren().add(pan);
+        btBookStock.setOnAction(e->btBookStock.getScene().setRoot(BookStockView.startScene(man)));
+        btAddBooks.setOnAction(e->btAddBooks.getScene().setRoot(AddExistingBooksView.startScene(man)));
         btLogOut.setOnAction(e->btLogOut.getScene().setRoot(StarterView.startScene()));
-        btStatistics.setOnAction(e->btStatistics.getScene().setRoot(StatisticsView.startScene()));
+        btStatistics.setOnAction(e->btStatistics.getScene().setRoot(StatisticsView.startScene(man)));
         return pane;
     }
 }

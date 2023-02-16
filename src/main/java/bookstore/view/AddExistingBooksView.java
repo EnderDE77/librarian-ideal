@@ -1,20 +1,21 @@
 package bookstore.view;
 
 import bookstore.models.Book;
-import bookstore.models.people.Librarian;
 import bookstore.texts.Warehouse;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import bookstore.models.people.Manager;
+import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
-public abstract class LibrarianView {
-    //TODO: sign up a librarian and create your first bill woohoo
-    public static Pane startScene(Librarian lib){
+public abstract class AddExistingBooksView {
+    public static Pane startScene(Manager man){
         Pane pane = new Pane();
         VBox inner = new VBox(20);
         inner.setAlignment(Pos.CENTER);
@@ -47,7 +48,7 @@ public abstract class LibrarianView {
         TableColumn<Book, Double> priceCol = new TableColumn<>("Price");
         priceCol.setMinWidth(250);
         priceCol.setMaxWidth(250);
-        priceCol.setCellValueFactory(new PropertyValueFactory<>("sellingPrice"));
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("purchasedPrice"));
         TableColumn<Book,Integer> stockCol = new TableColumn<>("Stock");
         stockCol.setMinWidth(250);
         stockCol.setMaxWidth(250);
@@ -66,20 +67,20 @@ public abstract class LibrarianView {
         btEnter.setOnAction(e->{
             boolean isEntered = Warehouse.enterBook(bill,tfTitle.getText(),tfISBN.getText(),tfAmount.getText());
             if(isEntered){
-                lbPrice.setText(String.valueOf(Warehouse.getTotalBillPrice(bill)));
+                lbPrice.setText(String.valueOf(Warehouse.getTotalBobPrice(bill)));
             }
             tfTitle.clear();
             tfISBN.clear();
             tfAmount.clear();
         });
         btSell.setOnAction(e->{
-            boolean isSold = Warehouse.createBill(lib,bill);
+            boolean isSold = Warehouse.createBob(man,bill);
             if(isSold){
                 lbPrice.setText("0");
                 bill.clear();
             }
         });
-        btExit.setOnAction(e-> btExit.getScene().setRoot(StarterView.startScene()));
+        btExit.setOnAction(e-> btExit.getScene().setRoot(ManagerView.startScene(man)));
         return pane;
     }
 }

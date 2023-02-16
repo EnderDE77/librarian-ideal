@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class Author implements Serializable {
     @Serial
     private static final long serialVersionUID = 2048;
-    private StringProperty author;
+    private transient StringProperty author;
     private String authorP;
     public Author(String author){
         this.authorP = author;
@@ -25,5 +25,9 @@ public class Author implements Serializable {
     public void setAuthor(String author) {
         this.author = new SimpleStringProperty(author);
         this.authorP = author;
+    }
+    @Override
+    public String toString() {
+        return this.getAuthor();
     }
 }

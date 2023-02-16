@@ -1,6 +1,7 @@
 package bookstore.models;
 
 import bookstore.models.people.Librarian;
+import bookstore.models.people.User;
 import javafx.beans.property.*;
 
 import java.io.Serial;
@@ -14,19 +15,20 @@ public class Bill implements Serializable {
     private static final long serialVersionUID = 77777;
     private transient IntegerProperty billID;
     private Integer billIDP;
-    private final Librarian sellingLibrarian;
+    private final User sellingUser;
     private final ArrayList<Book> sellingBooks;
     private final Date dateOfTransaction;
     private transient DoubleProperty totalPrice;
     private Double totalPriceP;
-    private BooleanProperty selling;
+    private transient BooleanProperty selling;
     private Boolean sellingP;
-    public Bill(int billID,Librarian sellingLibrarian, ArrayList<Book> sellingBooks,boolean selling) {
+    public Bill(int billID,User sellingLibrarian, ArrayList<Book> sellingBooks,boolean selling) {
+        this.sellingP = selling;
         if (selling) {
 
             this.billIDP = billID;
             setBillID(billID);
-            this.sellingLibrarian = sellingLibrarian;
+            this.sellingUser = sellingLibrarian;
             this.sellingBooks = sellingBooks;
             this.dateOfTransaction = new Date();
             setTotalPrice(0.0);
@@ -39,7 +41,7 @@ public class Bill implements Serializable {
 
             this.billIDP = billID;
             setBillID(billID);
-            this.sellingLibrarian = sellingLibrarian;
+            this.sellingUser = sellingLibrarian;
             this.sellingBooks = sellingBooks;
             this.dateOfTransaction = new Date();
             setTotalPrice(0.0);
@@ -85,7 +87,7 @@ public class Bill implements Serializable {
             bill.append(x.toString()+"\n");
         }
         bill.append("Total price: "+this.getTotalPrice()+"\n");
-        bill.append("Librarian name: "+sellingLibrarian.getName());
+        bill.append("Librarian name: "+sellingUser.getName());
         return bill.toString();
     }
 

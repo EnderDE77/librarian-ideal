@@ -14,6 +14,8 @@ import java.util.*;
 import static java.lang.System.out;
 
 public abstract class Warehouse {
+    private static int noOfBills;
+    private static int noOfBobs;
     private static final SimpleDateFormat dateFor = new SimpleDateFormat("dd/MM/yyyy");
     private static ArrayList<User> users = new ArrayList<>();
     private static ArrayList<Book> books = new ArrayList<>();
@@ -43,34 +45,14 @@ public abstract class Warehouse {
             categories = (ArrayList<Category>) objOut.readObject();
             out.close();
             objOut.close();
-        } catch (IOException | ClassNotFoundException e) {
-            out.println(e);
-        }
-    }
-    public static User searchUser(String username,String pass){
-        for(User x: getUsers()){
-            if(x.getUsername().equals(username)&&x.getPass().equals(pass)){
-                return x;
+            for(Bill x: getBills()){
+                if(x.isSelling())noOfBills++;
+                else noOfBobs++;
             }
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println(e);
         }
-        return null;
     }
-    public static ArrayList<Book> getBooks(){
-        return books;
-    }
-    public static ArrayList<User> getUsers(){
-        return users;
-    }
-    public static ArrayList<Bill> getBills(){
-        return bills;
-    }
-    public static ArrayList<Author> getAuthors() {
-        return authors;
-    }
-    public static ArrayList<Category> getCategories(){
-        return categories;
-    }
-
     public static void finish(){
         try{
             FileOutputStream fOut;
@@ -90,10 +72,36 @@ public abstract class Warehouse {
             oOut.writeObject(getCategories());
             fOut.close();
             oOut.close();
-         } catch (IOException e) {
+        } catch (IOException e) {
             System.out.println(e);
         }
     }
+
+    public static ArrayList<Book> getBooks(){
+        return books;
+    }
+    public static ArrayList<User> getUsers(){
+        return users;
+    }
+    public static ArrayList<Bill> getBills(){
+        return bills;
+    }
+    public static ArrayList<Author> getAuthors() {
+        return authors;
+    }
+    public static ArrayList<Category> getCategories(){
+        return categories;
+    }
+
+    public static User searchUser(String username,String pass){
+        for(User x: getUsers()){
+            if(x.getUsername().equals(username)&&x.getPass().equals(pass)){
+                return x;
+            }
+        }
+        return null;
+    }
+
     public static boolean createUser(String username, String pass, String name, String bDay, String email,String phoneNo, AccessLevel accessLevel,String confPass){
         if(!bDay.matches("\\d{2}/\\d{2}/\\d{4}"))return false;
         if(!(searchUser(username,pass) == null))return false;
@@ -108,7 +116,6 @@ public abstract class Warehouse {
             case     ADMIN -> users.add(new Admin    (username,pass,users.size()+1000,name,dateFor.parse(bDay),phoneNo,email,80000));
             }
         } catch (ParseException e) {
-            System.out.println(e);
             return false;
         }
         return true;
@@ -130,16 +137,25 @@ public abstract class Warehouse {
         }
         return true;
     }
-    public static double getTotalPrice(ArrayList<Book> bill){
+    public static double getTotalBillPrice(ArrayList<Book> bill){
         double sum = 0;
         for(Book x:bill){
             sum+=x.getSellingPrice();
         }
         return sum;
     }
+    public static double getTotalBobPrice(ArrayList<Book> bill){
+        double sum = 0;
+        for(Book x:bill){
+            sum+=x.getPurchasedPrice();
+        }
+        return sum;
+    }
+
 
     public static boolean createBill(Librarian lib, ArrayList<Book> bill) {
-        String order = "src/main/java/bookstore/texts/bills/Bill"+(bills.size()+1)+".txt";
+        if(bill.size()==0)return false;
+        String order = "src/main/java/bookstore/texts/bills/Bill"+(noOfBills+1)+".txt";
         File fOrder = new File(order);
         try {
             if(!fOrder.createNewFile())return false;
@@ -147,7 +163,7 @@ public abstract class Warehouse {
             System.out.println(e);
             return false;
         }
-        Bill billy = new Bill(bills.size()+1,lib,bill,true);
+        Bill billy = new Bill(noOfBills+1,lib,bill,true);
         try(PrintWriter out = new PrintWriter(fOrder)) {
             out.println(billy);
         } catch (FileNotFoundException e) {
@@ -155,7 +171,49 @@ public abstract class Warehouse {
             return false;
         }
         bills.add(billy);
+        noOfBills++;
         return true;
     }
 
+    public static boolean createCategory(String newCat) {
+        if(newCat.length()==0)return false;
+        for(Category x:getCategories()){
+            if(newCat.equals(x.getCategory()))return false;
+        }
+        categories.add(new Category(newCat));
+        return true;
+    }
+
+    public static boolean createAuthor(String newAuth) {
+        if(newAuth.length()==0)return false;
+        for(Author x:getAuthors()){
+            if(newAuth.equals(x.getAuthor()))return false;
+        }
+        authors.add(new Author(newAuth));
+        return true;
+    }
+
+    public static boolean createBob(Manager man, ArrayList<Book> bob) {
+        if(bob.size()==0)return false;
+        Bill bobby = new Bill(noOfBobs+1,man,bob,false);
+        bills.add(bobby);
+        return true;
+    }
+
+    public static boolean createBook(String title, Author author, Category category, String isbn, String supplier, String purchasedPriceS, String sellingPriceS) {
+        if(searchBook(title,isbn) != null)return false;
+        if(author.getAuthor().length() == 0)return false;
+        if(category.getCategory().length() == 0)return false;
+        if(supplier.length() == 0)return false;
+        if(!isbn.matches("\\d{13}"))return false;
+        double purchasedPr,sellingPr;
+        try{
+            purchasedPr = Double.parseDouble(purchasedPriceS);
+            sellingPr = Double.parseDouble(sellingPriceS);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        books.add(new Book(title,author,category,isbn,supplier,purchasedPr,sellingPr,0));
+        return true;
+    }
 }

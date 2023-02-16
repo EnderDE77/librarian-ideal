@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class Category implements Serializable {
     @Serial
     private static final long serialVersionUID = 1984;
-    private StringProperty category;
+    private transient StringProperty category;
     private String categoryP;
     public Category(String category){
         this.categoryP = category;
@@ -23,5 +23,10 @@ public class Category implements Serializable {
     public void setCategory(String author) {
         this.category = new SimpleStringProperty(author);
         this.categoryP = author;
+    }
+
+    @Override
+    public String toString() {
+        return this.getCategory();
     }
 }

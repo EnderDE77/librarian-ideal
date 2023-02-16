@@ -13,8 +13,6 @@ public class Book implements Serializable {
     private transient StringProperty title;
     private String titleP;
     private Author author;
-    private transient IntegerProperty noOfPages;
-    private Integer noOfPagesP;
     private Category category;
     private transient StringProperty ISBN;
     private String ISBNP;
@@ -27,10 +25,9 @@ public class Book implements Serializable {
     private transient IntegerProperty stock;
     private Integer stockP;
 
-    public Book(String title, Author author, int noOfPages, Category category, String ISBN, String supplier, double purchasedPrice, double sellingPrice, int stock) {
+    public Book(String title, Author author, Category category, String ISBN, String supplier,double purchasedPrice, double sellingPrice, int stock) {
         this.titleP = title;
         this.author = author;
-        this.noOfPagesP = noOfPages;
         this.category = category;
         this.ISBNP = ISBN;
         this.supplierP = supplier;
@@ -58,17 +55,6 @@ public class Book implements Serializable {
         this.titleP = title;
     }
 
-    public int getNoOfPages() {
-        if(this.noOfPages == null)setNoOfPages(noOfPagesP);
-        return noOfPages.get();
-    }
-
-
-    public void setNoOfPages(int noOfPages) {
-        this.noOfPages = new SimpleIntegerProperty(noOfPages);
-        this.noOfPagesP = noOfPages;
-    }
-
     public String getCategory() {
         return category.getCategory();
     }
@@ -93,7 +79,6 @@ public class Book implements Serializable {
         if(this.supplier == null)setSupplier(supplierP);
         return supplier.get();
     }
-
 
     public void setSupplier(String supplier) {
         this.supplier = new SimpleStringProperty(supplier);

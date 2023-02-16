@@ -2,6 +2,8 @@ package bookstore.view;
 
 import bookstore.models.Book;
 import bookstore.models.attributes.Author;
+import bookstore.models.attributes.Category;
+import bookstore.models.people.Manager;
 import bookstore.texts.Warehouse;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -13,22 +15,29 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public abstract class BookStockView {
-    public static Pane startScene(){
+    public static Pane startScene(Manager man){
         Pane pane = new Pane();
-        HBox top = new HBox(100);
+        HBox top = new HBox(70);
         VBox filt = new VBox(20);
+        VBox filt2 = new VBox(20);
+        VBox filt3 = new VBox(20);
         Pane center = new Pane();
         HBox bottom = new HBox(50);
-        TextField tfFilter = new TextField();
+        Label lbTitle = new Label("Title");
+        TextField tfTitle = new TextField();
+        Label lbISBN = new Label("ISBN");
+        TextField tfISBN = new TextField();
         Button btFilter = new Button("Filter");
         btFilter.setMinWidth(150);
         btFilter.setMinHeight(70);
         ComboBox<Author> aths = new ComboBox<>();
         aths.setItems(FXCollections.observableArrayList(Warehouse.getAuthors()));
-        ComboBox<Author> cats = new ComboBox<>();
-        cats.setItems(FXCollections.observableArrayList(Warehouse.getAuthors()));
+        ComboBox<Category> cats = new ComboBox<>();
+        cats.setItems(FXCollections.observableArrayList(Warehouse.getCategories()));
         filt.getChildren().addAll(aths,cats);
-        top.getChildren().addAll(tfFilter,btFilter,filt);
+        filt2.getChildren().addAll(lbTitle,tfTitle);
+        filt3.getChildren().addAll(lbISBN,tfISBN);
+        top.getChildren().addAll(filt2,filt3,btFilter,filt);
         TableView<Book> tvStocks = new TableView<>();
         tvStocks.setMinWidth(800);
         tvStocks.setMaxWidth(800);
@@ -79,14 +88,14 @@ public abstract class BookStockView {
         bottom.getChildren().addAll(btNewBook,btDelete,btBack,btEdit);
         bottom.setAlignment(Pos.BASELINE_LEFT);
         VBox looks = new VBox(50);
-        looks.setPadding(new Insets(50));
+        looks.setPadding(new Insets(50,0,0,80));
         looks.getChildren().addAll(top,center,bottom);
         pane.getChildren().add(looks);
         looks.setAlignment(Pos.CENTER);
-        btBack.setOnAction(e->{});
+        btBack.setOnAction(e->{btBack.getScene().setRoot(ManagerView.startScene(man));});
         btFilter.setOnAction(e->{});
         btDelete.setOnAction(e->{});
-        btNewBook.setOnAction(e->{});
+        btNewBook.setOnAction(e->btNewBook.getScene().setRoot(AddBooksView.startScene(man)));
         btEdit.setOnAction(e->{});
         return pane;
     }
