@@ -17,7 +17,7 @@ public class Bill implements Serializable {
     private transient IntegerProperty billID;
     private Integer billIDP;
     private final User sellingUser;
-    private final ArrayList<Book> sellingBooks;
+    private ArrayList<Book> sellingBooks;
     private final Date dateOfTransaction;
     private transient DoubleProperty totalPrice;
     private Double totalPriceP;
@@ -25,27 +25,19 @@ public class Bill implements Serializable {
     private Boolean sellingP;
     public Bill(int billID,User sellingLibrarian, ArrayList<Book> sellingBooks,boolean selling) {
         this.sellingP = selling;
+        this.billIDP = billID;
+        this.sellingUser = sellingLibrarian;
+        this.sellingBooks = new ArrayList<>();
+        this.sellingBooks.addAll(sellingBooks);
+        this.dateOfTransaction = new Date();
+        setTotalPrice(0.0);
         if (selling) {
-
-            this.billIDP = billID;
-            setBillID(billID);
-            this.sellingUser = sellingLibrarian;
-            this.sellingBooks = sellingBooks;
-            this.dateOfTransaction = new Date();
-            setTotalPrice(0.0);
             for (Book x : sellingBooks) {
                 Warehouse.getBooks().get(Warehouse.getBooks().indexOf(x)).setStock(Warehouse.getBooks().get(Warehouse.getBooks().indexOf(x)).getStock()-1);
                 setTotalPrice(getTotalPrice() + x.getSellingPrice());
             }
         }
         else{
-
-            this.billIDP = billID;
-            setBillID(billID);
-            this.sellingUser = sellingLibrarian;
-            this.sellingBooks = sellingBooks;
-            this.dateOfTransaction = new Date();
-            setTotalPrice(0.0);
             for (Book x : sellingBooks) {
                 Warehouse.getBooks().get(Warehouse.getBooks().indexOf(x)).setStock(Warehouse.getBooks().get(Warehouse.getBooks().indexOf(x)).getStock()+1);
                 setTotalPrice(getTotalPrice() + x.getPurchasedPrice());
@@ -65,6 +57,9 @@ public class Bill implements Serializable {
         this.totalPrice = new SimpleDoubleProperty(totalPrice);
         this.totalPriceP = totalPrice;
     }
+    public ArrayList<Book> getSellingBooks(){
+        return sellingBooks;
+    }
 
     public int getBillID() {
         if(this.billID == null)setBillID(billIDP);
@@ -78,13 +73,22 @@ public class Bill implements Serializable {
         if(this.selling == null)setSelling(sellingP);
         return this.selling.get();
     }
+    public User getSellingUser(){
+        return this.sellingUser;
+    }
+
+    public Date getDateOfTransaction() {
+        return dateOfTransaction;
+    }
+
     @Override
     public String toString() {
         Calendar time = Calendar.getInstance();
         time.setTime(dateOfTransaction);
         StringBuilder bill = new StringBuilder();
         bill.append("Bill number "+this.getBillID()+"\n");
-        for(Book x:sellingBooks){
+        bill.append("Date "+time.get(Calendar.DAY_OF_MONTH)+"/"+time.get(Calendar.MONTH)+"/"+time.get(Calendar.YEAR)+"/"+"\n");
+        for(Book x:getSellingBooks()){
             bill.append(x.toString()+"\n");
         }
         bill.append("Total price: "+this.getTotalPrice()+"\n");

@@ -1,11 +1,11 @@
-package bookstore.view;
+package bookstore.view.manager;
 
 import bookstore.models.Book;
 import bookstore.models.people.Manager;
 import bookstore.texts.Warehouse;
+import bookstore.view.starter.StarterView;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;

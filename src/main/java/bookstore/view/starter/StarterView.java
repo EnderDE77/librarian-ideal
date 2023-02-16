@@ -1,10 +1,13 @@
-package bookstore.view;
+package bookstore.view.starter;
 
 import bookstore.models.people.Admin;
 import bookstore.models.people.Librarian;
 import bookstore.models.people.Manager;
 import bookstore.models.people.User;
 import bookstore.texts.Warehouse;
+import bookstore.view.admin.AdminView;
+import bookstore.view.librarian.LibrarianView;
+import bookstore.view.manager.ManagerView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -37,11 +40,8 @@ public abstract class StarterView {
         Button btEnter = new Button("Enter");
         btEnter.setMinWidth(150);
         btEnter.setMinHeight(70);
-        Button btSignUp = new Button("Sign up");
-        btSignUp.setMinWidth(150);
-        btSignUp.setMinHeight(70);
         bottom.setAlignment(Pos.CENTER);
-        bottom.getChildren().addAll(btEnter,btSignUp);
+        bottom.getChildren().addAll(btEnter);
 
         HBox test = new HBox();
         Label lbTest = new Label("");
@@ -68,10 +68,6 @@ public abstract class StarterView {
                 lbTest.setText("User does not exist");
             }
         });
-        btSignUp.setOnAction(e->{
-            btSignUp.getScene().setRoot(SignUpView.startScene());
-        });
-
         return pane;
     }
 }

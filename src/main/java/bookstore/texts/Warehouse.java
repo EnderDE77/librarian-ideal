@@ -5,6 +5,8 @@ import bookstore.models.Bill;
 import bookstore.models.attributes.Author;
 import bookstore.models.attributes.Category;
 import bookstore.models.people.*;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TablePosition;
 
 import java.io.*;
 import java.text.ParseException;
@@ -24,7 +26,7 @@ public abstract class Warehouse {
     private static ArrayList<Category> categories = new ArrayList<>();
     private static final File fUsers = new File("src/main/java/bookstore/texts/bin/users.dat");
     private static final File fBooks = new File("src/main/java/bookstore/texts/bin/books.dat");
-    //private static final File fBills = new File("src/main/java/bookstore/texts/bin/bills.dat");
+    private static final File fBills = new File("src/main/java/bookstore/texts/bin/bills.dat");
     private static final File fWHE = new File("src/main/java/bookstore/texts/bin/WHE.dat");
     public static void ready() {
         try {
@@ -40,9 +42,9 @@ public abstract class Warehouse {
             out = new FileInputStream(fBooks);
             objOut = new ObjectInputStream(out);
             books = (ArrayList<Book>) objOut.readObject();
-            //out = new FileInputStream(fBills);
-            //objOut = new ObjectInputStream(out);
-           // bills = (ArrayList<Bill>) objOut.readObject();
+            out = new FileInputStream(fBills);
+            objOut = new ObjectInputStream(out);
+            bills = (ArrayList<Bill>) objOut.readObject();
             out.close();
             objOut.close();
             for(Bill x: getBills()){
@@ -52,7 +54,6 @@ public abstract class Warehouse {
         } catch (IOException | ClassNotFoundException e) {
             System.out.println(e);
         }
-        test();
     }
     public static void finish(){
         try{
@@ -64,9 +65,9 @@ public abstract class Warehouse {
             fOut = new FileOutputStream(fBooks);
             oOut = new ObjectOutputStream(fOut);
             oOut.writeObject(getBooks());
-           // fOut = new FileOutputStream(fBills);
-           // oOut = new ObjectOutputStream(fOut);
-           // oOut.writeObject(getBills());
+            fOut = new FileOutputStream(fBills);
+            oOut = new ObjectOutputStream(fOut);
+            oOut.writeObject(getBills());
             fOut = new FileOutputStream(fWHE);
             oOut = new ObjectOutputStream(fOut);
             oOut.writeObject(getAuthors());
@@ -77,35 +78,6 @@ public abstract class Warehouse {
             System.out.println(e);
         }
     }
-    private static void test(){
-        for(User x:getUsers()){
-            int i=1;
-            System.out.println(i+" "+x);
-            i++;
-        }
-        for(Book x:getBooks()){
-            int i=1;
-            System.out.println(i+" "+x);
-            i++;
-        }
-        for(Bill x:getBills()){
-            int i=1;
-            if(!x.isSelling())continue;
-            System.out.println(i+" "+x);
-            i++;
-        }
-        for(Category x:getCategories()){
-            int i=1;
-            System.out.println(i+" "+x);
-            i++;
-        }
-        for(Author x:getAuthors()){
-            int i=1;
-            System.out.println(i+" "+x);
-            i++;
-        }
-    }
-
     public static ArrayList<Book> getBooks(){
         return books;
     }
@@ -121,7 +93,6 @@ public abstract class Warehouse {
     public static ArrayList<Category> getCategories(){
         return categories;
     }
-
     public static User searchUser(String username,String pass){
         for(User x: getUsers()){
             if(x.getUsername().equals(username)&&x.getPass().equals(pass)){
@@ -131,13 +102,13 @@ public abstract class Warehouse {
         return null;
     }
 
-    public static boolean createUser(String username, String pass, String name, String bDay, String email,String phoneNo, AccessLevel accessLevel,String confPass){
-        if(!bDay.matches("\\d{2}/\\d{2}/\\d{4}"))return false;
-        if(!(searchUser(username,pass) == null))return false;
-        if(!email.matches("\\w+@\\w+\\.\\w+"))return false;
-        if(!pass.equals(confPass))return false;
-        if(!phoneNo.matches("06[6-9]\\d{7}"))return false;
-        if(username.length()==0||pass.length()==0||name.length()==0)return false;
+    public static String createUser(String username, String pass, String name, String bDay, String email,String phoneNo, AccessLevel accessLevel,String confPass){
+        if(!bDay.matches("\\d{2}/\\d{2}/\\d{4}"))return "Wrong date format";
+        if(!(searchUser(username,pass) == null))return "User already exists";
+        if(!email.matches("\\w+@\\w+\\.\\w+\\.?\\w*"))return "Wrong email format";
+        if(!pass.equals(confPass))return "check confirm password";
+        if(!phoneNo.matches("06[6-9]\\d{7}"))return "Wrong phone number format";
+        if(username.length()==0||pass.length()==0||name.length()==0)return "Empty spaces";
         try {
         switch(accessLevel){
             case LIBRARIAN -> users.add(new Librarian(username,pass,users.size()+1000,name,dateFor.parse(bDay),phoneNo,email,20000));
@@ -145,9 +116,9 @@ public abstract class Warehouse {
             case     ADMIN -> users.add(new Admin    (username,pass,users.size()+1000,name,dateFor.parse(bDay),phoneNo,email,80000));
             }
         } catch (ParseException e) {
-            return false;
+            return "Wrong date format";
         }
-        return true;
+        return "User created successfully";
     }
     public static Book searchBook(String title, String ISBN) {
         for(Book x:getBooks()){
@@ -253,5 +224,174 @@ public abstract class Warehouse {
         }
         books.add(new Book(title,author,category,isbn,supplier,purchasedPr,sellingPr,0));
         return true;
+    }
+
+    public static ArrayList<Book> filterBook(String ISBN, String title, Author author, Category category) {
+        ArrayList<Book> tmp = new ArrayList<>();
+        if(author == null||category == null) return tmp;
+        for(Book x:getBooks()){
+            if(x.getISBN().equals(ISBN)||x.getTitle().equals(title)||x.getAuthor().equals(author.getAuthor())||x.getCategory().equals(category.getCategory()))tmp.add(x);
+        }
+        return tmp;
+    }
+
+    public static ArrayList<Book> deleteBooks(ObservableList<Book> selectedItems) {
+        ArrayList<Book> tmp = getBooks();
+        for(Book x:selectedItems){
+            for(Book y:getBooks()){
+                if(x.getISBN().equals(y.getISBN())){
+                    tmp.remove(x);
+                }
+            }
+        }
+        return tmp;
+    }
+
+    public static boolean editBook(Book book,String title, Author author, Category category, String isbn, String supplier, String purchasedPriceS, String sellingPriceS) {
+        if(author.getAuthor().length() == 0)return false;
+        if(category.getCategory().length() == 0)return false;
+        if(supplier.length() == 0)return false;
+        if(!isbn.matches("\\d{13}"))return false;
+        double purchasedPr,sellingPr;
+        try{
+            purchasedPr = Double.parseDouble(purchasedPriceS);
+            sellingPr = Double.parseDouble(sellingPriceS);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        book.setTitle(title);
+        book.setAuthor(author.getAuthor());
+        book.setCategory(category.getCategory());
+        book.setISBN(isbn);
+        book.setSupplier(supplier);
+        book.setPurchasedPrice(purchasedPr);
+        book.setSellingPrice(sellingPr);
+        getBooks().set(getBooks().indexOf(book),book);
+        return true;
+    }
+
+    public static ArrayList<Bill> filterLibs(String sDate, String eDate){
+        ArrayList<Bill> tmp = new ArrayList<>();
+        for(Bill x: getBills()){
+            if(x.isSelling())
+                tmp.add(x);
+        }
+        long iSDate,iEDate,iBDate;
+        try {
+            iSDate = dateFor.parse(sDate).getTime();
+            iEDate = dateFor.parse(eDate).getTime();
+        } catch (ParseException e) {
+            System.out.println("This shit wrong mate");
+            return tmp;
+        }
+        tmp.clear();
+        for(Bill x:getBills()){
+            iBDate = x.getDateOfTransaction().getTime();
+            if(iBDate <= iEDate && iBDate >= iSDate)
+                tmp.add(x);
+        }
+        return tmp;
+    }
+
+    public static ArrayList<User> filterEmployees(String name) {
+        ArrayList<User> tmp = new ArrayList<>();
+        for(User x:getUsers()){
+            if(x.getAccessLevel() != AccessLevel.ADMIN && x.getName().matches(".*"+name+".*"))tmp.add(x);
+        }
+        return tmp;
+    }
+
+    public static ArrayList<User> deleteEmployees(ObservableList<User> selectedItems) {
+        ArrayList<User> tmp = new ArrayList<>();
+        for(User x:users){
+            for(User y:selectedItems){
+                if(x.getID() != y.getID()){
+                    tmp.add(x);
+                }
+            }
+        }
+        users = tmp;
+        return getUsers();
+    }
+
+    public static String editUser(User user, String username, String pass, String name, String bDay, String email, String phoneNo, String confPass, String salary) {
+        if(!bDay.matches("\\d{2}/\\d{2}/\\d{4}"))return "Wrong date format";
+        if(!(searchUser(username,pass) == null))return "User already exists";
+        if(!email.matches("\\w+@\\w+\\.\\w+\\.?\\w*"))return "Wrong email format";
+        if(!pass.equals(confPass))return "check confirm password";
+        if(!phoneNo.matches("06[6-9]\\d{7}"))return "Wrong phone number format";
+        if(username.length()==0||pass.length()==0||name.length()==0)return "Empty spaces";
+        int index=0;
+        double nSalary;
+        for(User x:getUsers()){
+            if(x.getID() == user.getID())break;
+            index++;
+        }
+        Date dBDay;
+        try{
+            nSalary = Double.parseDouble(salary);
+            dBDay =dateFor.parse(bDay);
+        }catch (ParseException e){
+            return "Wrong date format";
+        }catch (NumberFormatException e){
+            return "Wrong salary format";
+        }
+            user.setName(name);
+            user.setUsername(username);
+            user.setPass(pass);
+            user.setName(name);
+            user.setEmail(email);
+            user.setPhoneNo(phoneNo);
+            user.setbDay(dBDay);
+            user.setSalary(nSalary);
+            getUsers().set(index,user);
+        return "User successfully edited";
+    }
+
+    public static double[] getIncome(String sSDate, String sEDate) {
+        double[] tmp = new double[3];
+        double revenue = 0;
+        double cost = 0;
+        double profit = 0;
+        double sumOfSalaries = 0;
+        for(User x:getUsers()){
+            sumOfSalaries+=x.getSalary();
+        }
+        Date SDate,EDate;
+        try {
+            SDate = dateFor.parse(sSDate);
+            EDate = dateFor.parse(sEDate);
+        }catch(ParseException e){
+            return tmp;
+        }
+        Calendar cSDate = Calendar.getInstance();
+        cSDate.setTime(SDate);
+        Calendar cEDate = Calendar.getInstance();
+        cEDate.setTime(EDate);
+        int monthDiff = (cEDate.get(Calendar.YEAR)*12+cEDate.get(Calendar.MONTH))-(cSDate.get(Calendar.YEAR)*12+cSDate.get(Calendar.MONTH));
+        for(Bill x:getBills()){
+            long time = x.getDateOfTransaction().getTime();
+            if(time<=EDate.getTime() && time>=SDate.getTime()){
+                if(x.isSelling()){
+                    for(Book y: x.getSellingBooks())cost += y.getPurchasedPrice();
+                    revenue += x.getTotalPrice();
+                }
+                else{
+                    cost += x.getTotalPrice();
+                }
+            }
+        }
+        cost += monthDiff*sumOfSalaries;
+        profit = revenue - cost;
+        tmp[0]=revenue;
+        tmp[1]=cost;
+        tmp[2]=profit;
+        return tmp;
+    }
+
+    public static String showDate(Date date) {
+        Calendar time = Calendar.getInstance();
+        time.setTime(date);
+        return time.get(Calendar.DAY_OF_MONTH)+"/"+time.get(Calendar.MONTH)+"/"+time.get(Calendar.YEAR);
     }
 }

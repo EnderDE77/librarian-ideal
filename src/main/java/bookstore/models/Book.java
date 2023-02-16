@@ -36,8 +36,8 @@ public class Book implements Serializable {
         this.stockP = stock;
     }
 
-    public String getAuthor() {
-        return author.getAuthor();
+    public Author getAuthor() {
+        return author;
     }
 
     public void setAuthor(String author) {
@@ -55,8 +55,8 @@ public class Book implements Serializable {
         this.titleP = title;
     }
 
-    public String getCategory() {
-        return category.getCategory();
+    public Category getCategory() {
+        return category;
     }
 
 

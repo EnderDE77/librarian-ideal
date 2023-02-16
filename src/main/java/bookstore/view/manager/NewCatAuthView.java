@@ -1,7 +1,8 @@
-package bookstore.view;
+package bookstore.view.manager;
 
 import bookstore.models.people.Manager;
 import bookstore.texts.Warehouse;
+import bookstore.view.manager.AddBooksView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

@@ -1,8 +1,9 @@
-package bookstore.view;
+package bookstore.view.librarian;
 
 import bookstore.models.Book;
 import bookstore.models.people.Librarian;
 import bookstore.texts.Warehouse;
+import bookstore.view.starter.StarterView;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -48,7 +49,7 @@ public abstract class LibrarianView {
         TableColumn<Book,Integer> stockCol = new TableColumn<>("Stock");
         stockCol.setMinWidth(200);
         stockCol.setMaxWidth(200);
-        priceCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        stockCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         table.getColumns().addAll(titleCol,ISBNCol,priceCol,stockCol);
         mid.getChildren().add(table);
         HBox bott = new HBox(20);
@@ -79,7 +80,7 @@ public abstract class LibrarianView {
         btSell.setOnAction(e->{
             boolean isSold = Warehouse.createBill(lib,bill);
             if(isSold){
-                lbPrice.setText("0");
+                lbPrice.setText("0.00");
                 bill.clear();
                 table.setItems(FXCollections.observableArrayList(bill));
             }

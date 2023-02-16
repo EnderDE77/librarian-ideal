@@ -1,6 +1,6 @@
 package bookstore;
 
-import bookstore.view.StarterView;
+import bookstore.view.starter.StarterView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

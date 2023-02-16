@@ -1,4 +1,4 @@
-package bookstore.view;
+package bookstore.view.manager;
 
 import bookstore.models.Book;
 import bookstore.models.attributes.Author;
@@ -13,6 +13,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class BookStockView {
     public static Pane startScene(Manager man){
@@ -42,7 +45,8 @@ public abstract class BookStockView {
         tvStocks.setMinWidth(800);
         tvStocks.setMaxWidth(800);
         tvStocks.setMinHeight(400);
-        tvStocks.setItems(FXCollections.observableArrayList(Warehouse.getBooks()));
+        AtomicReference<ArrayList<Book>> areMade = new AtomicReference<>(Warehouse.getBooks());
+        tvStocks.setItems(FXCollections.observableArrayList(areMade.get()));
         TableColumn<Book,String> tcISBN = new TableColumn<>("ISBN");
         tcISBN.setMinWidth(160);
         tcISBN.setMaxWidth(160);
@@ -92,11 +96,21 @@ public abstract class BookStockView {
         looks.getChildren().addAll(top,center,bottom);
         pane.getChildren().add(looks);
         looks.setAlignment(Pos.CENTER);
-        btBack.setOnAction(e->{btBack.getScene().setRoot(ManagerView.startScene(man));});
-        btFilter.setOnAction(e->{});
-        btDelete.setOnAction(e->{});
+        btBack.setOnAction(e-> btBack.getScene().setRoot(ManagerView.startScene(man)));
+        btFilter.setOnAction(e->{
+            areMade.set(Warehouse.filterBook(tfISBN.getText(), tfTitle.getText(), aths.getValue(), cats.getValue()));
+            tvStocks.setItems(FXCollections.observableArrayList(areMade.get()));
+        });
+        btDelete.setOnAction(e->{
+            areMade.set(Warehouse.deleteBooks(tvStocks.getSelectionModel().getSelectedItems()));
+            tvStocks.setItems(FXCollections.observableArrayList(areMade.get()));
+        });
         btNewBook.setOnAction(e->btNewBook.getScene().setRoot(AddBooksView.startScene(man)));
-        btEdit.setOnAction(e->{});
+        btEdit.setOnAction(e->{
+            if(tvStocks.getSelectionModel().getSelectedItems().size() != 0){
+                btEdit.getScene().setRoot(BookEditView.startScene(man,tvStocks.getSelectionModel().getSelectedItems().get(0)));
+            }
+        });
         return pane;
     }
 }

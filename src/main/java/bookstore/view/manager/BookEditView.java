@@ -1,5 +1,6 @@
-package bookstore.view;
+package bookstore.view.manager;
 
+import bookstore.models.Book;
 import bookstore.models.attributes.Author;
 import bookstore.models.attributes.Category;
 import bookstore.models.people.Manager;
@@ -17,37 +18,36 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 
-public abstract class AddBooksView {
-    public static Pane startScene(Manager man){
+public abstract class BookEditView {
+    public static Pane startScene(Manager man, Book bok){
         Pane pane = new Pane();
         GridPane material = new GridPane();
         material.setHgap(25);
         material.setVgap(25);
         Label lbTitle = new Label("Title");
-        TextField tfTitle = new TextField();
+        TextField tfTitle = new TextField(bok.getTitle());
         Label lbISBN = new Label("ISBN");
-        TextField tfISBN = new TextField();
+        TextField tfISBN = new TextField(bok.getISBN());
         Label lbAuthor = new Label("Author");
         ComboBox<Author> cbAuthor = new ComboBox<>();
         cbAuthor.setItems(FXCollections.observableArrayList(Warehouse.getAuthors()));
+        cbAuthor.setValue(bok.getAuthor());
         Label lbCategory = new Label("Category");
         ComboBox<Category> cbCategory = new ComboBox<>();
         cbCategory.setItems(FXCollections.observableArrayList(Warehouse.getCategories()));
+        cbCategory.setValue(bok.getCategory());
         Label lbPurchasedPrice = new Label("Purchased Price");
-        TextField tfPurchasedPrice = new TextField();
+        TextField tfPurchasedPrice = new TextField(String.valueOf(bok.getPurchasedPrice()));
         Label lbSellingPrice = new Label("Selling Price");
-        TextField tfSellingPrice = new TextField();
+        TextField tfSellingPrice = new TextField(String.valueOf(bok.getSellingPrice()));
         Label lbSupplier = new Label("Supplier");
-        TextField tfSupplier = new TextField();
-        Button btNewBook = new Button("Add New Book");
-        btNewBook.setMinWidth(150);
-        btNewBook.setMinHeight(70);
+        TextField tfSupplier = new TextField(bok.getSupplier());
+        Button btSave = new Button("Save changes");
+        btSave.setMinWidth(150);
+        btSave.setMinHeight(70);
         Button btBack = new Button("Back");
         btBack.setMinWidth(150);
         btBack.setMinHeight(70);
-        Button btNewCatAuth = new Button("New Category/Author");
-        btNewCatAuth.setMinWidth(150);
-        btNewCatAuth.setMinHeight(70);
         material.add(lbTitle,0,0);
         material.add(tfTitle,1,0);
         material.add(lbISBN,2,0);
@@ -64,7 +64,7 @@ public abstract class AddBooksView {
         material.add(tfSupplier,1,3);
         material.setAlignment(Pos.CENTER);
         HBox buttons = new HBox(30);
-        buttons.getChildren().addAll(btNewBook,btNewCatAuth,btBack);
+        buttons.getChildren().addAll(btSave,btBack);
         buttons.setAlignment(Pos.CENTER);
         Label lbSuccess = new Label("");
         lbSuccess.setAlignment(Pos.CENTER);
@@ -73,21 +73,15 @@ public abstract class AddBooksView {
         setting.getChildren().addAll(material,lbSuccess,buttons);
         pane.getChildren().add(setting);
         btBack.setOnAction(e->btBack.getScene().setRoot(BookStockView.startScene(man)));
-        btNewBook.setOnAction(e->{
-            boolean isCreated = Warehouse.createBook(tfTitle.getText(),cbAuthor.getValue(),cbCategory.getValue(),tfISBN.getText(),tfSupplier.getText(),tfPurchasedPrice.getText(),tfSellingPrice.getText());
+        btSave.setOnAction(e->{
+            boolean isCreated = Warehouse.editBook(bok,tfTitle.getText(),cbAuthor.getValue(),cbCategory.getValue(),tfISBN.getText(),tfSupplier.getText(),tfPurchasedPrice.getText(),tfSellingPrice.getText());
             if(isCreated){
-                lbSuccess.setText("New Book added");
+                lbSuccess.setText("New Book edited");
             }
             else{
                 lbSuccess.setText("Failed");
             }
-            tfISBN.clear();
-            tfTitle.clear();
-            tfSupplier.clear();
-            tfPurchasedPrice.clear();
-            tfSellingPrice.clear();
         });
-        btNewCatAuth.setOnAction(e->btNewCatAuth.getScene().setRoot(NewCatAuthView.startScene(man)));
         return pane;
     }
 }
