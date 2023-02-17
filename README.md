@@ -1,2 +1,2 @@
-# librarian-ideal
-the java project idk
+# Librarian Management System
+Java project SWE 2023
