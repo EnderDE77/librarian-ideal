@@ -18,3 +18,17 @@ The project is in beta-2 phase. The link of the repository is down below.
 Thank you and enjoy the rest of this old car.
 
 LMS link: https://github.com/EnderDE77/librarian-ideal
+
+Primary accounts:
++ Librarian: 
+* Name: Martha
+* Username: MeanLady85
+* Password: nuktathem
++ Manager:
+* Name: Erlis
+* Username: BattleShip
+* Password: aroundtheworld
++ Admin:
+* Name: Drake
+* Username: CertifiedLoverBoy
+* Password: godsplan

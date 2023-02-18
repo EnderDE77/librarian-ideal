@@ -1,7 +1,8 @@
-package bookstore.view;
+package bookstore.view.manager;
 
 import bookstore.models.Book;
 import bookstore.texts.Warehouse;
+import bookstore.view.manager.ManagerView;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -65,7 +66,7 @@ public abstract class AddExistingBooksView {
         bott.getChildren().addAll(lbTotal,lbPrice,btEnter,btSell,btExit);
         inner.getChildren().addAll(top,mid,bott);
         btEnter.setOnAction(e->{
-            boolean isEntered = Warehouse.enterBook(bill,tfTitle.getText(),tfISBN.getText(),tfAmount.getText());
+            boolean isEntered = Warehouse.enterBobBook(bill,tfTitle.getText(),tfISBN.getText(),tfAmount.getText());
             if(isEntered){
                 lbPrice.setText(String.valueOf(Warehouse.getTotalBobPrice(bill)));
             }
