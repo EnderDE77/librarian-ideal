@@ -79,10 +79,10 @@ public abstract class EditEmployeeView {
 
         GridPane bts = new GridPane();
         bts.setHgap(20);
-        Button btLogIn = new Button("Log in");
+        Button btLogIn = new Button("Back");
         btLogIn.setMinWidth(150);
         btLogIn.setMinHeight(70);
-        Button btSignUp = new Button("Sign up");
+        Button btSignUp = new Button("Edit");
         btSignUp.setMinWidth(150);
         btSignUp.setMinHeight(70);
         bts.add(btLogIn,0,0);

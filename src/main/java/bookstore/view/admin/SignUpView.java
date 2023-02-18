@@ -89,10 +89,10 @@ public abstract class SignUpView {
 
         GridPane bts = new GridPane();
         bts.setHgap(20);
-        Button btLogIn = new Button("Log in");
+        Button btLogIn = new Button("Back");
         btLogIn.setMinWidth(150);
         btLogIn.setMinHeight(70);
-        Button btSignUp = new Button("Sign up");
+        Button btSignUp = new Button("Create Employee");
         btSignUp.setMinWidth(150);
         btSignUp.setMinHeight(70);
         bts.add(btLogIn,0,0);
@@ -128,7 +128,7 @@ public abstract class SignUpView {
             tfUser.clear();
             txt.setText(isSignedIn);
         });
-        btLogIn.setOnAction(e-> btLogIn.getScene().setRoot(StarterView.startScene()));
+        btLogIn.setOnAction(e-> btLogIn.getScene().setRoot(EmployeeChartView.startScene(adm)));
 
         return pane;
     }

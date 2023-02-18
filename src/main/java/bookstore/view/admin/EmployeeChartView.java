@@ -74,13 +74,13 @@ public abstract class EmployeeChartView {
         Button btDelete = new Button("Delete Employee(s)");
         btDelete.setMinWidth(150);
         btDelete.setMinHeight(70);
-        Button btNewEmp = new Button("New Book");
+        Button btNewEmp = new Button("New Employee");
         btNewEmp.setMinWidth(150);
         btNewEmp.setMinHeight(70);
         Button btBack = new Button("Back");
         btBack.setMinWidth(150);
         btBack.setMinHeight(70);
-        Button btEdit = new Button("Edit Book");
+        Button btEdit = new Button("Edit Employee");
         btEdit.setMinWidth(150);
         btEdit.setMinHeight(70);
         bottom.getChildren().addAll(btNewEmp,btDelete,btBack,btEdit);
