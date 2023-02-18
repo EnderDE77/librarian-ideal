@@ -58,7 +58,7 @@ public abstract class AddExistingBooksView {
         bott.setAlignment(Pos.CENTER);
         Label lbTotal = new Label("Total");
         Label lbPrice = new Label("0.00");
-        Button btSell = new Button("Sell");
+        Button btSell = new Button("Buy");
         btSell.setMinHeight(70);
         btSell.setMinWidth(150);
         Button btEnter= new Button("Enter");
