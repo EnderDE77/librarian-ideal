@@ -9,7 +9,7 @@ import bookstore.texts.Warehouse;
 public class Main extends Application{
     @Override
     public void start(Stage stage){
-        stage.setTitle("Enter");
+        stage.setTitle("LMS Program B2");
         Scene scene = new Scene(StarterView.startScene(),1000,750);
         stage.setScene(scene);
         stage.setResizable(false);
