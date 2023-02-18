@@ -6,14 +6,12 @@ import bookstore.models.attributes.Author;
 import bookstore.models.attributes.Category;
 import bookstore.models.people.*;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TablePosition;
 
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static java.lang.System.out;
 
 public abstract class Warehouse {
     private static int noOfBills;

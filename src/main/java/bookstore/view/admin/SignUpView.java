@@ -3,7 +3,6 @@ package bookstore.view.admin;
 import bookstore.models.people.AccessLevel;
 import bookstore.models.people.Admin;
 import bookstore.texts.Warehouse;
-import bookstore.view.starter.StarterView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;

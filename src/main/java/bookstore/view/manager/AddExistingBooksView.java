@@ -2,7 +2,6 @@ package bookstore.view.manager;
 
 import bookstore.models.Book;
 import bookstore.texts.Warehouse;
-import bookstore.view.manager.ManagerView;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,8 +18,7 @@ public abstract class AddExistingBooksView {
     public static Pane startScene(Manager man){
         Pane pane = new Pane();
         VBox inner = new VBox(20);
-        inner.setAlignment(Pos.CENTER);
-        inner.setPadding(new Insets(20));
+        inner.setPadding(new Insets(80,0,0,0));
         pane.getChildren().add(inner);
         HBox top = new HBox(20);
         top.setAlignment(Pos.CENTER);
@@ -54,21 +52,28 @@ public abstract class AddExistingBooksView {
         stockCol.setMinWidth(250);
         stockCol.setMaxWidth(250);
         priceCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        table.getColumns().addAll(titleCol,ISBNCol,priceCol);
+        table.getColumns().addAll(titleCol,ISBNCol,priceCol,stockCol);
         mid.getChildren().add(table);
         HBox bott = new HBox(20);
         bott.setAlignment(Pos.CENTER);
         Label lbTotal = new Label("Total");
         Label lbPrice = new Label("0.00");
         Button btSell = new Button("Sell");
+        btSell.setMinHeight(70);
+        btSell.setMinWidth(150);
         Button btEnter= new Button("Enter");
+        btEnter.setMinHeight(70);
+        btEnter.setMinWidth(150);
         Button btExit = new Button("Exit");
+        btExit.setMinHeight(70);
+        btExit.setMinWidth(150);
         bott.getChildren().addAll(lbTotal,lbPrice,btEnter,btSell,btExit);
         inner.getChildren().addAll(top,mid,bott);
         btEnter.setOnAction(e->{
             boolean isEntered = Warehouse.enterBobBook(bill,tfTitle.getText(),tfISBN.getText(),tfAmount.getText());
             if(isEntered){
                 lbPrice.setText(String.valueOf(Warehouse.getTotalBobPrice(bill)));
+                table.setItems(FXCollections.observableArrayList(bill));
             }
             tfTitle.clear();
             tfISBN.clear();
@@ -79,6 +84,7 @@ public abstract class AddExistingBooksView {
             if(isSold){
                 lbPrice.setText("0");
                 bill.clear();
+                table.setItems(FXCollections.observableArrayList(bill));
             }
         });
         btExit.setOnAction(e-> btExit.getScene().setRoot(ManagerView.startScene(man)));

@@ -1,6 +1,5 @@
 package bookstore.models;
 
-import bookstore.models.people.Librarian;
 import bookstore.models.people.User;
 import bookstore.texts.Warehouse;
 import javafx.beans.property.*;
